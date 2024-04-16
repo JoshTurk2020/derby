@@ -8,7 +8,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
         body {
-            background-image: url('kentucky-derby-background.jpg');
+            background-image: url('derbytrack.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             font-family: 'Bangers', cursive;
@@ -22,34 +22,34 @@
         }
         .racetrack {
             display: flex;
-            justify-content: space-around;
+            justify-content: flex-start;
             margin-bottom: 20px;
         }
         .horse {
             width: 120px;
             height: 120px;
-            background-size: cover;
+            background-size: contain;
             background-repeat: no-repeat;
             position: relative;
             left: 0;
             transition: left 0.5s;
         }
         .horse.player1 {
-            background-image: url('homer.gif');
+            background-image: url('mario.gif');
         }
         .horse.player2 {
-            background-image: url('mickey.gif');
+            background-image: url('sonic.gif');
         }
-        .horse.computer {
-            background-image: url('robot.gif');
+        .horse.zombie {
+            background-image: url('zombie.gif');
         }
         .carrot {
             position: absolute;
             right: 20px;
             top: 50%;
             transform: translateY(-50%);
-            width: 60px;
-            height: 60px;
+            width: 120px;
+            height: 120px;
             background-image: url('carrot.png');
             background-size: cover;
             background-repeat: no-repeat;
@@ -109,6 +109,7 @@
             justify-content: space-around;
             margin-top: 20px;
             font-size: 32px;
+            color: white;
         }
         .player-info span {
             font-weight: bold;
@@ -136,7 +137,7 @@
             <div class="horse player2" id="player2Horse"></div>
         </div>
         <div class="racetrack">
-            <div class="horse computer" id="computerHorse"></div>
+            <div class="horse zombie" id="zombieHorse"></div>
         </div>
         <div class="carrot"></div>
         <p id="question"></p>
@@ -146,14 +147,14 @@
         <div class="player-info">
             <span class="player1-name"></span>
             <span class="player2-name"></span>
-            <span class="computer-name">Computer</span>
+            <span class="zombie-name">Zombie</span>
         </div>
     </div>
 
     <script>
         const player1Horse = document.getElementById('player1Horse');
         const player2Horse = document.getElementById('player2Horse');
-        const computerHorse = document.getElementById('computerHorse');
+        const zombieHorse = document.getElementById('zombieHorse');
         const questionElement = document.getElementById('question');
         const answerInput = document.getElementById('answer');
         const resultElement = document.getElementById('result');
@@ -161,6 +162,7 @@
         let currentPlayer = 1;
         let player1CorrectAnswers = 0;
         let player2CorrectAnswers = 0;
+        let incorrectAnswers = 0;
         let questions = [
             { question: "If it rains tomorrow, I _____ (stay) at home.", answer: "will stay" },
             { question: "If you heat water to 100°C, it _____ (boil).", answer: "boils" },
@@ -267,9 +269,15 @@
                     return;
                 }
             } else {
-                moveHorse("computer");
-                resultElement.textContent = "Incorrect! Computer's horse moves forward.";
+                moveHorse("zombie");
+                resultElement.textContent = "Incorrect! Zombie horse moves forward.";
                 playHorseSound(false);
+                incorrectAnswers++;
+
+                if (incorrectAnswers === 5) {
+                    endGame("zombie");
+                    return;
+                }
             }
 
             questions = questions.filter(q => q !== currentQuestion);
@@ -278,13 +286,14 @@
         }
 
         function moveHorse(horse) {
-            const distance = 5;
+            const playerDistance = 2;
+            const zombieDistance = 4;
             if (horse === 1) {
-                player1Horse.style.left = `${player1Horse.offsetLeft + distance}px`;
+                player1Horse.style.left = `${player1Horse.offsetLeft + playerDistance}px`;
             } else if (horse === 2) {
-                player2Horse.style.left = `${player2Horse.offsetLeft + distance}px`;
-            } else if (horse === "computer") {
-                computerHorse.style.left = `${computerHorse.offsetLeft + distance}px`;
+                player2Horse.style.left = `${player2Horse.offsetLeft + playerDistance}px`;
+            } else if (horse === "zombie") {
+                zombieHorse.style.left = `${zombieHorse.offsetLeft + zombieDistance}px`;
             }
         }
 
@@ -295,9 +304,13 @@
             }
         }
 
-        function endGame() {
-            const winner = player1CorrectAnswers === 10 ? player1NameDisplay.textContent : player2NameDisplay.textContent;
-            questionElement.textContent = `Game Over! ${winner} wins!`;
+        function endGame(winner) {
+            if (winner === "zombie") {
+                questionElement.textContent = "Game Over! The Zombie wins!";
+            } else {
+                const winnerName = player1CorrectAnswers === 10 ? player1NameDisplay.textContent : player2NameDisplay.textContent;
+                questionElement.textContent = `Game Over! ${winnerName} wins!`;
+            }
             answerInput.style.display = "none";
         }
     </script>
