@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conditional Horse Race</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
         body {
-            background-image: url('derbytrack.jpg');
+            background-image: url('kentucky-derby-background.jpg');
             background-size: cover;
             background-repeat: no-repeat;
-            font-family: 'Old Standard TT', serif;
-            color: #fff;
+            font-family: 'Bangers', cursive;
+            color: #FFD700;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
         }
         h1 {
             text-align: center;
-            font-size: 48px;
+            font-size: 64px;
             margin-top: 20px;
         }
         .racetrack {
@@ -41,7 +41,7 @@
             background-image: url('mickey.gif');
         }
         .horse.computer {
-            background-image: url('zombie.gif');
+            background-image: url('robot.gif');
         }
         .carrot {
             position: absolute;
@@ -59,41 +59,41 @@
             margin-top: 50px;
         }
         #nameInput label {
-            font-size: 24px;
+            font-size: 32px;
             margin-bottom: 10px;
         }
         #nameInput input {
             padding: 8px;
-            font-size: 18px;
+            font-size: 24px;
             margin-bottom: 10px;
             width: 200px;
         }
         #nameInput button {
             padding: 10px 20px;
-            font-size: 20px;
-            background-color: #8B0000;
-            color: #fff;
+            font-size: 28px;
+            background-color: #FFD700;
+            color: #8B0000;
             border: none;
             cursor: pointer;
             margin-top: 20px;
         }
         #question {
             text-align: center;
-            font-size: 24px;
+            font-size: 32px;
             margin-bottom: 20px;
         }
         #answer {
             padding: 8px;
-            font-size: 18px;
+            font-size: 24px;
             width: 200px;
             margin: 0 auto;
             display: block;
         }
         button {
             padding: 10px 20px;
-            font-size: 20px;
-            background-color: #8B0000;
-            color: #fff;
+            font-size: 28px;
+            background-color: #FFD700;
+            color: #8B0000;
             border: none;
             cursor: pointer;
             margin: 20px auto;
@@ -101,26 +101,17 @@
         }
         #result {
             text-align: center;
-            font-size: 24px;
+            font-size: 32px;
             margin-top: 20px;
         }
         .player-info {
             display: flex;
             justify-content: space-around;
             margin-top: 20px;
-            font-size: 24px;
+            font-size: 32px;
         }
         .player-info span {
             font-weight: bold;
-        }
-        .player1-name {
-            color: blue;
-        }
-        .player2-name {
-            color: red;
-        }
-        .computer-name {
-            color: green;
         }
     </style>
 </head>
@@ -168,6 +159,8 @@
         const resultElement = document.getElementById('result');
 
         let currentPlayer = 1;
+        let player1CorrectAnswers = 0;
+        let player2CorrectAnswers = 0;
         let questions = [
             { question: "If it rains tomorrow, I _____ (stay) at home.", answer: "will stay" },
             { question: "If you heat water to 100°C, it _____ (boil).", answer: "boils" },
@@ -188,7 +181,17 @@
             { question: "If I find your keys, I _____ (let) you know.", answer: "will let" },
             { question: "If you multiply 3 by 4, you _____ (get) 12.", answer: "get" },
             { question: "If he calls me, I _____ (answer) the phone.", answer: "will answer" },
-            { question: "If you subtract 5 from 10, you _____ (get) 5.", answer: "get" }
+            { question: "If you subtract 5 from 10, you _____ (get) 5.", answer: "get" },
+            { question: "If the traffic is bad, I _____ (be) late for work.", answer: "will be" },
+            { question: "If you turn off the lights, the room _____ (be) dark.", answer: "is" },
+            { question: "If I have time, I _____ (visit) my grandparents.", answer: "will visit" },
+            { question: "If you eat too much junk food, you _____ (feel) sick.", answer: "will feel" },
+            { question: "If I study computer science, I _____ (become) a programmer.", answer: "will become" },
+            { question: "If you give me a pen, I _____ (write) a letter.", answer: "will write" },
+            { question: "If it snows tomorrow, we _____ (go) skiing.", answer: "will go" },
+            { question: "If I push this button, the machine _____ (start).", answer: "starts" },
+            { question: "If you learn a new language, you _____ (improve) your memory.", answer: "will improve" },
+            { question: "If I have a headache, I _____ (take) an aspirin.", answer: "will take" }
         ];
 
         const nameInputContainer = document.getElementById('nameInput');
@@ -212,7 +215,7 @@
         }
 
         function playBackgroundMusic() {
-            const audio = new Audio('william_tell.mp3');
+            const audio = new Audio('kentucky-derby-music.mp3');
             audio.loop = true;
             audio.play();
         }
@@ -223,7 +226,7 @@
         }
 
         function playHorseSound(isCorrect) {
-            const sound = isCorrect ? new Audio('running.mp3') : new Audio('running.mp3');
+            const sound = isCorrect ? new Audio('horse-neigh.mp3') : new Audio('horse-snort.mp3');
             sound.play();
         }
 
@@ -239,7 +242,7 @@
             answerInput.value = "";
             resultElement.textContent = "";
             
-            if (questions.length === 20) {
+            if (questions.length === 30) {
                 playGunshot();
             }
         }
@@ -252,6 +255,17 @@
                 moveHorse(currentPlayer);
                 resultElement.textContent = "Correct!";
                 playHorseSound(true);
+
+                if (currentPlayer === 1) {
+                    player1CorrectAnswers++;
+                } else if (currentPlayer === 2) {
+                    player2CorrectAnswers++;
+                }
+
+                if (player1CorrectAnswers === 10 || player2CorrectAnswers === 10) {
+                    endGame();
+                    return;
+                }
             } else {
                 moveHorse("computer");
                 resultElement.textContent = "Incorrect! Computer's horse moves forward.";
@@ -264,7 +278,7 @@
         }
 
         function moveHorse(horse) {
-            const distance = 20;
+            const distance = 5;
             if (horse === 1) {
                 player1Horse.style.left = `${player1Horse.offsetLeft + distance}px`;
             } else if (horse === 2) {
@@ -279,6 +293,12 @@
                 const j = Math.floor(Math.random() * (i + 1));
                 [questions[i], questions[j]] = [questions[j], questions[i]];
             }
+        }
+
+        function endGame() {
+            const winner = player1CorrectAnswers === 10 ? player1NameDisplay.textContent : player2NameDisplay.textContent;
+            questionElement.textContent = `Game Over! ${winner} wins!`;
+            answerInput.style.display = "none";
         }
     </script>
 </body>
