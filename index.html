@@ -8,7 +8,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@400;700&display=swap');
 
         body {
-            background-image: url('derbytrack.jpg');
+            background-image: url('kentucky-derby-background.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             font-family: 'Old Standard TT', serif;
@@ -35,13 +35,13 @@
             transition: left 0.5s;
         }
         .horse.player1 {
-            background-image: url('homer.png');
+            background-image: url('homer.gif');
         }
         .horse.player2 {
-            background-image: url('mickey.png');
+            background-image: url('mickey.gif');
         }
         .horse.computer {
-            background-image: url('zombie.gif');
+            background-image: url('robot.gif');
         }
         .carrot {
             position: absolute;
@@ -223,7 +223,7 @@
         }
 
         function playHorseSound(isCorrect) {
-            const sound = isCorrect ? new Audio('running.mp3') : new Audio('running.mp3');
+            const sound = isCorrect ? new Audio('horse-neigh.mp3') : new Audio('horse-snort.mp3');
             sound.play();
         }
 
@@ -264,7 +264,7 @@
         }
 
         function moveHorse(horse) {
-            const distance = 50;
+            const distance = 20;
             if (horse === 1) {
                 player1Horse.style.left = `${player1Horse.offsetLeft + distance}px`;
             } else if (horse === 2) {
