@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conditional Horse Race</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@400;700&display=swap');
+
+        body {
+            background-image: url('https://example.com/kentucky-derby-background.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: 'Old Standard TT', serif;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+        h1 {
+            text-align: center;
+            font-size: 48px;
+            margin-top: 20px;
+        }
+        .racetrack {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .horse {
+            width: 120px;
+            height: 120px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            position: relative;
+            left: 0;
+            transition: left 0.5s;
+        }
+        .horse.player1 {
+            background-image: url('https://example.com/horse1.png');
+        }
+        .horse.player2 {
+            background-image: url('https://example.com/horse2.png');
+        }
+        .horse.computer {
+            background-image: url('https://example.com/horse3.png');
+        }
+        .carrot {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            background-image: url('https://example.com/carrot.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        #nameInput {
+            text-align: center;
+            margin-top: 50px;
+        }
+        #nameInput label {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        #nameInput input {
+            padding: 8px;
+            font-size: 18px;
+            margin-bottom: 10px;
+            width: 200px;
+        }
+        #nameInput button {
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #8B0000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        #question {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #answer {
+            padding: 8px;
+            font-size: 18px;
+            width: 200px;
+            margin: 0 auto;
+            display: block;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #8B0000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+        }
+        #result {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        .player-info {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            font-size: 24px;
+        }
+        .player-info span {
+            font-weight: bold;
+        }
+        .player1-name {
+            color: blue;
+        }
+        .player2-name {
+            color: red;
+        }
+        .computer-name {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div id="nameInput">
+        <h1>Kentucky Derby: Conditional Race</h1>
+        <label for="player1Name">Player 1 Name:</label>
+        <input type="text" id="player1Name" placeholder="Enter Player 1 Name">
+        <br>
+        <label for="player2Name">Player 2 Name:</label>
+        <input type="text" id="player2Name" placeholder="Enter Player 2 Name">
+        <br>
+        <button onclick="startGame()">Start Race</button>
+    </div>
+
+    <div id="gameContainer" style="display: none;">
+        <h1>Kentucky Derby: Conditional Race</h1>
+        <div class="racetrack">
+            <div class="horse player1" id="player1Horse"></div>
+        </div>
+        <div class="racetrack">
+            <div class="horse player2" id="player2Horse"></div>
+        </div>
+        <div class="racetrack">
+            <div class="horse computer" id="computerHorse"></div>
+        </div>
+        <div class="carrot"></div>
+        <p id="question"></p>
+        <input type="text" id="answer" placeholder="Type your answer">
+        <button onclick="checkAnswer()">Submit</button>
+        <p id="result"></p>
+        <div class="player-info">
+            <span class="player1-name"></span>
+            <span class="player2-name"></span>
+            <span class="computer-name">Computer</span>
+        </div>
+    </div>
+
+    <script>
+        const player1Horse = document.getElementById('player1Horse');
+        const player2Horse = document.getElementById('player2Horse');
+        const computerHorse = document.getElementById('computerHorse');
+        const questionElement = document.getElementById('question');
+        const answerInput = document.getElementById('answer');
+        const resultElement = document.getElementById('result');
+
+        let currentPlayer = 1;
+        let questions = [
+            { question: "If it rains tomorrow, I _____ (stay) at home.", answer: "will stay" },
+            { question: "If you heat water to 100°C, it _____ (boil).", answer: "boils" },
+            { question: "If I have enough money, I _____ (buy) a new car.", answer: "will buy" },
+            { question: "If the sun shines, the flowers _____ (bloom).", answer: "will bloom" },
+            { question: "If you mix blue and yellow, you _____ (get) green.", answer: "get" },
+            { question: "If she practices every day, she _____ (improve) her skills.", answer: "will improve" },
+            { question: "If they win the match, they _____ (celebrate) tonight.", answer: "will celebrate" },
+            { question: "If you press the power button, the computer _____ (turn) on.", answer: "turns" },
+            { question: "If I see her at the party, I _____ (say) hello.", answer: "will say" },
+            { question: "If you add two and two, you _____ (get) four.", answer: "get" },
+            { question: "If he studies hard, he _____ (pass) the exam.", answer: "will pass" },
+            { question: "If you freeze water, it _____ (turn) into ice.", answer: "turns" },
+            { question: "If they arrive on time, we _____ (start) the meeting.", answer: "will start" },
+            { question: "If I find a million dollars, I _____ (donate) to charity.", answer: "will donate" },
+            { question: "If you divide 10 by 2, you _____ (get) 5.", answer: "get" },
+            { question: "If she goes to the gym regularly, she _____ (get) fit.", answer: "will get" },
+            { question: "If I find your keys, I _____ (let) you know.", answer: "will let" },
+            { question: "If you multiply 3 by 4, you _____ (get) 12.", answer: "get" },
+            { question: "If he calls me, I _____ (answer) the phone.", answer: "will answer" },
+            { question: "If you subtract 5 from 10, you _____ (get) 5.", answer: "get" }
+        ];
+
+        const nameInputContainer = document.getElementById('nameInput');
+        const gameContainer = document.getElementById('gameContainer');
+        const player1NameDisplay = document.querySelector('.player1-name');
+        const player2NameDisplay = document.querySelector('.player2-name');
+
+        function startGame() {
+            const player1Name = document.getElementById('player1Name').value;
+            const player2Name = document.getElementById('player2Name').value;
+
+            if (player1Name && player2Name) {
+                player1NameDisplay.textContent = player1Name;
+                player2NameDisplay.textContent = player2Name;
+                nameInputContainer.style.display = 'none';
+                gameContainer.style.display = 'block';
+                shuffleQuestions();
+                playBackgroundMusic();
+                displayQuestion();
+            }
+        }
+
+        function playBackgroundMusic() {
+            const audio = new Audio('https://example.com/kentucky-derby-music.mp3');
+            audio.loop = true;
+            audio.play();
+        }
+
+        function playGunshot() {
+            const gunshot = new Audio('https://example.com/gunshot.mp3');
+            gunshot.play();
+        }
+
+        function playHorseSound(isCorrect) {
+            const sound = isCorrect ? new Audio('https://example.com/horse-neigh.mp3') : new Audio('https://example.com/horse-snort.mp3');
+            sound.play();
+        }
+
+        function displayQuestion() {
+            if (questions.length === 0) {
+                questionElement.textContent = "No more questions. Race Over!";
+                answerInput.style.display = "none";
+                return;
+            }
+            const randomIndex = Math.floor(Math.random() * questions.length);
+            const question = questions[randomIndex];
+            questionElement.textContent = question.question;
+            answerInput.value = "";
+            resultElement.textContent = "";
+            
+            if (questions.length === 20) {
+                playGunshot();
+            }
+        }
+
+        function checkAnswer() {
+            const userAnswer = answerInput.value.trim().toLowerCase();
+            const currentQuestion = questions.find(q => q.question === questionElement.textContent);
+
+            if (userAnswer === currentQuestion.answer) {
+                moveHorse(currentPlayer);
+                resultElement.textContent = "Correct!";
+                playHorseSound(true);
+            } else {
+                moveHorse("computer");
+                resultElement.textContent = "Incorrect! Computer's horse moves forward.";
+                playHorseSound(false);
+            }
+
+            questions = questions.filter(q => q !== currentQuestion);
+            currentPlayer = currentPlayer === 1 ? 2 : 1;
+            setTimeout(displayQuestion, 1000);
+        }
+
+        function moveHorse(horse) {
+            const distance = 50;
+            if (horse === 1) {
+                player1Horse.style.left = `${player1Horse.offsetLeft + distance}px`;
+            } else if (horse === 2) {
+                player2Horse.style.left = `${player2Horse.offsetLeft + distance}px`;
+            } else if (horse === "computer") {
+                computerHorse.style.left = `${computerHorse.offsetLeft + distance}px`;
+            }
+        }
+
+        function shuffleQuestions() {
+            for (let i = questions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [questions[i], questions[j]] = [questions[j], questions[i]];
+            }
+        }
+    </script>
+</body>
+</html>
