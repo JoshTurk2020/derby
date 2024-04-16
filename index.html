@@ -8,7 +8,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:wght@400;700&display=swap');
 
         body {
-            background-image: url('https://example.com/kentucky-derby-background.jpg');
+            background-image: url('derbytrack.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             font-family: 'Old Standard TT', serif;
@@ -50,7 +50,7 @@
             transform: translateY(-50%);
             width: 60px;
             height: 60px;
-            background-image: url('https://example.com/carrot.png');
+            background-image: url('carrot.png');
             background-size: cover;
             background-repeat: no-repeat;
         }
@@ -212,18 +212,18 @@
         }
 
         function playBackgroundMusic() {
-            const audio = new Audio('https://example.com/kentucky-derby-music.mp3');
+            const audio = new Audio('kentucky-derby-music.mp3');
             audio.loop = true;
             audio.play();
         }
 
         function playGunshot() {
-            const gunshot = new Audio('https://example.com/gunshot.mp3');
+            const gunshot = new Audio('gunshot.mp3');
             gunshot.play();
         }
 
         function playHorseSound(isCorrect) {
-            const sound = isCorrect ? new Audio('https://example.com/horse-neigh.mp3') : new Audio('https://example.com/horse-snort.mp3');
+            const sound = isCorrect ? new Audio('horse-neigh.mp3') : new Audio('horse-snort.mp3');
             sound.play();
         }
 
