@@ -41,7 +41,7 @@
             background-image: url('sonic.gif');
         }
         .horse.zombie {
-            background-image: url('zombie.gif');
+            background-image: url('bowser.gif');
         }
         .carrot {
             position: absolute;
@@ -147,7 +147,7 @@
         <div class="player-info">
             <span class="player1-name"></span>
             <span class="player2-name"></span>
-            <span class="zombie-name">Zombie</span>
+            <span class="zombie-name">Bowser</span>
         </div>
     </div>
 
@@ -270,7 +270,7 @@
                 }
             } else {
                 moveHorse("zombie");
-                resultElement.textContent = "Incorrect! Zombie horse moves forward.";
+                resultElement.textContent = "Incorrect! Bowser moves forward.";
                 playHorseSound(false);
                 incorrectAnswers++;
 
@@ -306,7 +306,7 @@
 
         function endGame(winner) {
             if (winner === "zombie") {
-                questionElement.textContent = "Game Over! The Zombie wins!";
+                questionElement.textContent = "Game Over! Bowser wins!";
             } else {
                 const winnerName = player1CorrectAnswers === 10 ? player1NameDisplay.textContent : player2NameDisplay.textContent;
                 questionElement.textContent = `Game Over! ${winnerName} wins!`;
