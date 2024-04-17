@@ -139,16 +139,6 @@
             font-size: 24px;
             margin-top: 20px;
         }
-        #muteButton {
-            padding: 10px 20px;
-            font-size: 28px;
-            background-color: #FFD700;
-            color: #8B0000;
-            border: none;
-            cursor: pointer;
-            margin: 20px auto;
-            display: block;
-        }
     </style>
 </head>
 <body>
@@ -198,8 +188,6 @@
     </div>
     <div id="endGameGif"></div>
 
-    <button id="muteButton" onclick="toggleMute()">Mute</button>
-
     <script>
         const player1Horse = document.getElementById('player1Horse');
         const player2Horse = document.getElementById('player2Horse');
@@ -219,7 +207,7 @@
         let player2CorrectAnswers = 0;
         let incorrectAnswers = 0;
         let backgroundMusic;
-       let questions = [
+        let questions = [
             { question: "If it rains tomorrow, I _____ (stay) at home.", answer: "will stay" },
             { question: "If you heat water to 100°C, it _____ (boil).", answer: "boils" },
             { question: "If I have enough money, I _____ (buy) a new car.", answer: "will buy" },
@@ -256,34 +244,6 @@
         const gameContainer = document.getElementById('gameContainer');
         const player1NameDisplay = document.querySelector('.player1-name');
         const player2NameDisplay = document.querySelector('.player2-name');
-        
-        function toggleMute() {
-            if (isMuted) {
-                backgroundMusic.play();
-                document.getElementById('muteButton').textContent = 'Mute';
-            } else {
-                backgroundMusic.pause();
-                document.getElementById('muteButton').textContent = 'Unmute';
-            }
-            isMuted = !isMuted;
-           }
-        }
-        
-        function startGame() {
-            const player1Name = document.getElementById('player1Name').value;
-            const player2Name = document.getElementById('player2Name').value;
-
-            if (player1Name && player2Name) {
-                player1NameDisplay.textContent = player1Name;
-                player2NameDisplay.textContent = player2Name;
-                nameInputContainer.style.display = 'none';
-                gameContainer.style.display = 'block';
-                shuffleQuestions();
-                playBackgroundMusic();
-                displayQuestion();
-                displayRulesMessage();
-            }
-        }
 
         function startGame() {
             const player1Name = document.getElementById('player1Name').value;
