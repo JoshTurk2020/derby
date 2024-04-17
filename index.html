@@ -299,7 +299,7 @@
             ominousMusic.play();
         }
 
-        function displayQuestion() {
+                function displayQuestion() {
             if (questions.length === 0) {
                 questionElement.textContent = "All out of questions! Start over!";
                 answerInput.style.display = "none";
@@ -307,7 +307,7 @@
             }
             const randomIndex = Math.floor(Math.random() * questions.length);
             const question = questions[randomIndex];
-            questionElement.textContent = question;
+            questionElement.textContent = question.question;
             answerInput.value = "";
             resultElement.textContent = "";
             
@@ -318,7 +318,7 @@
 
         function checkAnswer() {
             const userAnswer = answerInput.value.trim().toLowerCase();
-            const currentQuestion = questionElement.textContent;
+            const currentQuestion = questions.find(q => q.question === questionElement.textContent);
 
             if (userAnswer === currentQuestion.answer) {
                 moveHorse(currentPlayer);
