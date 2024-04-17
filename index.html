@@ -410,21 +410,19 @@
     endGameMessage.style.textAlign = 'center';
 
     if (winner === "player1") {
-        endGameMessage.textContent = `${player1NameDisplay.textContent} rescued Princess Toadstool! Bowser was defeated!`;
+        endGameGifElement.style.backgroundImage = "url('mariowins.gif')";
     } else if (winner === "player2") {
-        endGameMessage.textContent = `${player2NameDisplay.textContent} rescued Princess Toadstool! Bowser was defeated!`;
+        endGameGifElement.style.backgroundImage = "url('luigiwins.gif')";
     } else if (winner === "zombie") {
-        endGameMessage.textContent = "Bowser captured Princess Toadstool! Game Over!";
+        endGameGifElement.style.backgroundImage = "url('bowserwins.gif')";
     }
 
-    document.body.appendChild(endGameMessage);
+    endGameContainer.appendChild(endGameGifElement);
 
     // Add a "Play Again?" button
     const playAgainButton = document.createElement("button");
     playAgainButton.textContent = "Play Again?";
-    playAgainButton.style.position = 'fixed';
-    playAgainButton.style.bottom = '20px';
-    playAgainButton.style.right = '20px';
+    playAgainButton.style.marginTop = '20px';
     playAgainButton.style.padding = '10px 20px';
     playAgainButton.style.fontSize = '24px';
     playAgainButton.style.backgroundColor = '#FFD700';
@@ -436,7 +434,12 @@
         location.reload(); // Reload the page to start a new game
     };
 
-    document.body.appendChild(playAgainButton);
+    endGameContainer.appendChild(playAgainButton);
+
+    // Append the end game container to the body
+    document.body.appendChild(endGameContainer);
+
+    playOminousMusic();
 }
     function shuffleQuestions() {
         for (let i = questions.length - 1; i > 0; i--) {
