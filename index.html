@@ -392,11 +392,11 @@
     player1Horse.style.pointerEvents = 'none';
     player2Horse.style.pointerEvents = 'none';
     answerInput.disabled = true;
-    
+
     // Display the end game GIF and play the ominous music
     endGameGif.style.display = "block";
     playOminousMusic();
-    
+
     // Create and display the end game message
     const endGameMessage = document.createElement('div');
     endGameMessage.style.position = 'fixed';
@@ -408,7 +408,7 @@
     endGameMessage.style.padding = '20px';
     endGameMessage.style.fontSize = '32px';
     endGameMessage.style.textAlign = 'center';
-    
+
     if (winner === "player1") {
         endGameMessage.textContent = `${player1NameDisplay.textContent} rescued Princess Toadstool! ${player2NameDisplay.textContent} and Bowser were defeated!`;
     } else if (winner === "player2") {
@@ -416,27 +416,26 @@
     } else if (winner === "zombie") {
         endGameMessage.textContent = "Bowser captured Princess Toadstool! Race Over!";
     }
-    
+
     document.body.appendChild(endGameMessage);
-    
+
     // Add a "Play Again?" button
     const playAgainButton = document.createElement("button");
     playAgainButton.textContent = "Play Again?";
     playAgainButton.style.position = 'fixed';
     playAgainButton.style.bottom = '20px';
-    playAgainButton.style.left = '50%';
-    playAgainButton.style.transform = 'translateX(-50%)';
+    playAgainButton.style.right = '20px';
     playAgainButton.style.padding = '10px 20px';
     playAgainButton.style.fontSize = '24px';
     playAgainButton.style.backgroundColor = '#FFD700';
     playAgainButton.style.color = '#8B0000';
     playAgainButton.style.border = 'none';
     playAgainButton.style.cursor = 'pointer';
-    
+
     playAgainButton.onclick = function() {
         location.reload(); // Reload the page to start a new game
     };
-    
+
     document.body.appendChild(playAgainButton);
 }
     function shuffleQuestions() {
