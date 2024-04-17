@@ -388,28 +388,6 @@
     }
 
     function endGame(winner) {
-    // Disable user input
-    player1Horse.style.pointerEvents = 'none';
-    player2Horse.style.pointerEvents = 'none';
-    answerInput.disabled = true;
-
-    // Display the end game GIF and play the ominous music
-    endGameGif.style.display = "block";
-    playOminousMusic();
-
-    // Create and display the end game message
-    const endGameMessage = document.createElement('div');
-    endGameMessage.style.position = 'fixed';
-    endGameMessage.style.top = '50%';
-    endGameMessage.style.left = '50%';
-    endGameMessage.style.transform = 'translate(-50%, -50%)';
-    endGameMessage.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-    endGameMessage.style.color = 'white';
-    endGameMessage.style.padding = '20px';
-    endGameMessage.style.fontSize = '32px';
-    endGameMessage.style.textAlign = 'center';
-
-    function endGame(winner) {
     if (winner === "player1") {
         captureMessage.textContent = `${player1NameDisplay.textContent} rescued Princess Toadstool! ${player2NameDisplay.textContent} and Bowser were defeated!`;
         endGameGif.style.backgroundImage = "url('mariowins.gif')";
