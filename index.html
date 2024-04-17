@@ -326,47 +326,48 @@
     }
 
     function checkAnswer() {
-        const userAnswer = answerInput.value.trim().toLowerCase();
-        const currentQuestion = questions.find(q => q.question === questionElement.textContent);
+    const userAnswer = answerInput.value.trim().toLowerCase();
+    const currentQuestion = questions.find(q => q.question === questionElement.textContent);
 
-        if (userAnswer === currentQuestion.answer) {
-            moveHorse(currentPlayer);
-            resultElement.textContent = "Correct!";
-            if (currentPlayer === 1) {
-                player1CorrectAnswers++;
-                player1ScoreElement.textContent = `Score: ${player1CorrectAnswers}`;
-                playMarioSound();
-                if (player1CorrectAnswers === 2) {
-                    endGame("player1");
-                    playMarioVictorySound();
-                    return;
-                }
-            } else if (currentPlayer === 2) {
-                player2CorrectAnswers++;
-                player2ScoreElement.textContent = `Score: ${player2CorrectAnswers}`;
-                playSonicSound();
-                if (player2CorrectAnswers === 2) {
-                    endGame("player2");
-                    playLuigiVictorySound();
-                    return;
-                }
+    if (userAnswer === currentQuestion.answer) {
+        moveHorse(currentPlayer);
+        resultElement.textContent = "Correct!";
+        if (currentPlayer === 1) {
+            player1CorrectAnswers++;
+            player1ScoreElement.textContent = `Score: ${player1CorrectAnswers}`;
+            playMarioSound();
+            if (player1CorrectAnswers === 2) {
+                endGame("player1");
+                playMarioVictorySound();
+                return;
             }
-        } else {
-            moveHorse("zombie");
-            resultElement.textContent = "Incorrect! Bowser moves forward.";
-            zombieScoreElement.textContent = `Score: ${++incorrectAnswers}`;
-            playBowserLaugh();
-
-            if (incorrectAnswers === 5) {
-                endGame("zombie");
+        } else if (currentPlayer === 2) {
+            player2CorrectAnswers++;
+            player2ScoreElement.textContent = `Score: ${player2CorrectAnswers}`;
+            playSonicSound();
+            if (player2CorrectAnswers === 2) {
+                endGame("player2");
+                playLuigiVictorySound();
                 return;
             }
         }
-        
-        questions = questions.filter(q => q !== currentQuestion);
-        currentPlayer = currentPlayer === 1 ? 2 : 1;
-        setTimeout(displayQuestion, 1000);
+    } else {
+        moveHorse("zombie");
+        resultElement.textContent = "Incorrect! Bowser moves forward.";
+        zombieScoreElement.textContent = `Score: ${++incorrectAnswers}`;
+        playBowserLaugh();
+
+        if (incorrectAnswers === 5) {
+            endGame("zombie");
+            return;
+        }
     }
+    
+    questions = questions.filter(q => q !== currentQuestion);
+    currentPlayer = currentPlayer === 1 ? 2 : 1;
+    displayQuestion(); // Display the next question immediately
+    }
+
     
     function moveHorse(horse) {
         const playerDistance = 2;
