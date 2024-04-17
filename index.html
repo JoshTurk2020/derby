@@ -268,6 +268,17 @@
         function playBackgroundMusic() {
             backgroundMusic = new Audio('mariobros.mp3');
             backgroundMusic.loop = true;
+            backgroundMusic.volume = 1; // Set the initial volume to 1
+        
+            // Decrease the volume over 20 seconds
+            let interval = setInterval(() => {
+                if (backgroundMusic.volume > 0) {
+                    backgroundMusic.volume -= 0.05; // Decrease the volume by 0.05 every 1 second
+                } else {
+                    clearInterval(interval); // Stop the interval when the volume reaches 0
+                }
+            }, 1000); // Run the function every 1 second (1000 milliseconds)
+        
             backgroundMusic.play();
         }
 
