@@ -409,37 +409,27 @@
     endGameMessage.style.fontSize = '32px';
     endGameMessage.style.textAlign = 'center';
 
+    function endGame(winner) {
     if (winner === "player1") {
-        endGameGifElement.style.backgroundImage = "url('mariowins.gif')";
+        captureMessage.textContent = `${player1NameDisplay.textContent} rescued Princess Toadstool! ${player2NameDisplay.textContent} and Bowser were defeated!`;
+        endGameGif.style.backgroundImage = "url('mariowins.gif')";
     } else if (winner === "player2") {
-        endGameGifElement.style.backgroundImage = "url('luigiwins.gif')";
+        captureMessage.textContent = `${player2NameDisplay.textContent} rescued Princess Toadstool! ${player1NameDisplay.textContent} and Bowser were defeated!`;
+        endGameGif.style.backgroundImage = "url('luigiwins.gif')";
     } else if (winner === "zombie") {
-        endGameGifElement.style.backgroundImage = "url('bowserwins.gif')";
+        captureMessage.textContent = "Bowser captured Princess Toadstool! Race Over!";
+        endGameGif.style.backgroundImage = "url('bowserwins.gif')";
     }
+    endGameGif.style.display = "block";
+    playOminousMusic();
 
-    endGameContainer.appendChild(endGameGifElement);
-
-    // Add a "Play Again?" button
+    // Display the "Play again?" prompt
     const playAgainButton = document.createElement("button");
     playAgainButton.textContent = "Play Again?";
-    playAgainButton.style.marginTop = '20px';
-    playAgainButton.style.padding = '10px 20px';
-    playAgainButton.style.fontSize = '24px';
-    playAgainButton.style.backgroundColor = '#FFD700';
-    playAgainButton.style.color = '#8B0000';
-    playAgainButton.style.border = 'none';
-    playAgainButton.style.cursor = 'pointer';
-
     playAgainButton.onclick = function() {
         location.reload(); // Reload the page to start a new game
     };
-
-    endGameContainer.appendChild(playAgainButton);
-
-    // Append the end game container to the body
-    document.body.appendChild(endGameContainer);
-
-    playOminousMusic();
+    captureMessage.appendChild(playAgainButton);
 }
     function shuffleQuestions() {
         for (let i = questions.length - 1; i > 0; i--) {
