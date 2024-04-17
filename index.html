@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Save Princess Toadstool!</title>
+    <title>Conditional Horse Race</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
         body {
-            background-image: url('derbytrack.jpg');
+            background-image: url('bowserhell.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             font-family: 'Bangers', cursive;
@@ -38,7 +38,7 @@
             background-image: url('mario.gif');
         }
         .horse.player2 {
-            background-image: url('sonic.gif');
+            background-image: url('luigi.gif');
         }
         .horse.zombie {
             background-image: url('bowser.gif');
@@ -50,7 +50,7 @@
             transform: translateY(-50%);
             width: 200px;
             height: 200px;
-            background-image: url('princess.gif');
+            background-image: url('princess_toadstool.gif');
             background-size: cover;
             background-repeat: no-repeat;
         }
@@ -120,14 +120,13 @@
             margin-top: 20px;
             display: none;
         }
-        #captureGif {
+        #endGameGif {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 80%;
             height: 80%;
-            background-image: url('bowserwins.gif');
             background-size: contain;
             background-repeat: no-repeat;
             display: none;
@@ -136,7 +135,7 @@
 </head>
 <body>
     <div id="nameInput">
-        <h1>Save Princess Toadstool</h1>
+        <h1>Zero and First Conditional Derby</h1>
         <label for="player1Name">Player 1 Name:</label>
         <input type="text" id="player1Name" placeholder="Enter Player 1 Name">
         <br>
@@ -147,7 +146,7 @@
     </div>
 
     <div id="gameContainer" style="display: none;">
-        <h1>Save Princess Toadstool!</h1>
+        <h1>Zero and First Conditional Derby</h1>
         <div class="racetrack">
             <div class="horse player1" id="player1Horse"></div>
         </div>
@@ -167,9 +166,9 @@
             <span class="player2-name"></span>
             <span class="zombie-name">Bowser</span>
         </div>
-        <p id="captureMessage">Bowser captured the Princess!</p>
+        <p id="captureMessage"></p>
     </div>
-    <div id="captureGif"></div>
+    <div id="endGameGif"></div>
 
     <script>
         const player1Horse = document.getElementById('player1Horse');
@@ -179,7 +178,7 @@
         const answerInput = document.getElementById('answer');
         const resultElement = document.getElementById('result');
         const captureMessage = document.getElementById('captureMessage');
-        const captureGif = document.getElementById('captureGif');
+        const endGameGif = document.getElementById('endGameGif');
 
         let currentPlayer = 1;
         let player1CorrectAnswers = 0;
@@ -240,7 +239,7 @@
         }
 
         function playBackgroundMusic() {
-            backgroundMusic = new Audio('william_tell.mp3');
+            backgroundMusic = new Audio('mariobros.mp3');
             backgroundMusic.loop = true;
             backgroundMusic.play();
         }
@@ -250,8 +249,13 @@
             gunshot.play();
         }
 
-        function playHorseSound(isCorrect) {
-            const sound = isCorrect ? new Audio('horse-neigh.mp3') : new Audio('horse-snort.mp3');
+        function playMarioSound() {
+            const sound = new Audio('mario_sound.mp3');
+            sound.play();
+        }
+
+        function playSonicSound() {
+            const sound = new Audio('luigisound.mp3');
             sound.play();
         }
 
@@ -291,22 +295,25 @@
             if (userAnswer === currentQuestion.answer) {
                 moveHorse(currentPlayer);
                 resultElement.textContent = "Correct!";
-                playHorseSound(true);
-
                 if (currentPlayer === 1) {
                     player1CorrectAnswers++;
+                    playMarioSound();
                 } else if (currentPlayer === 2) {
                     player2CorrectAnswers++;
+                    playSonicSound();
                 }
 
-                if (player1CorrectAnswers === 10 || player2CorrectAnswers === 10) {
-                    endGame();
+                if (player1CorrectAnswers === 10) {
+                    endGame("player1");
+                    return;
+                } else if (player2CorrectAnswers === 10) {
+                    endGame("player2");
                     return;
                 }
             } else {
                 moveHorse("zombie");
                 resultElement.textContent = "Incorrect! Bowser moves forward.";
-                playHorseSound(false);
+                playBowserLaugh();
                 incorrectAnswers++;
 
                 if (incorrectAnswers === 5) {
@@ -347,19 +354,26 @@
 
         function endGame(winner) {
             if (winner === "zombie") {
-                questionElement.textContent = "Game Over! Bowser wins!";
-                captureMessage.style.display = "block";
+                captureMessage.textContent = "Game Over! Bowser wins!";
                 playBowserLaugh();
                 playOminousMusic();
                 setTimeout(() => {
-                    captureGif.style.display = "block";
+                    endGameGif.style.backgroundImage = "url('bowserwins.gif')";
+                    endGameGif.style.display = "block";
                 }, 2000);
-            } else {
-                const winnerName = player1CorrectAnswers === 10 ? player1NameDisplay.textContent : player2NameDisplay.textContent;
-                questionElement.textContent = `Game Over! ${winnerName} wins!`;
+            } else if (winner === "player1") {
+                captureMessage.textContent = "Game Over! Mario wins!";
+                setTimeout(() => {
+                    endGameGif.style.backgroundImage = "url('mariowins.gif')";
+                    endGameGif.style.display = "block";
+                }, 2000);
+            } else if (winner === "player2") {
+                captureMessage.textContent = "Game Over! Luigi wins!";
+                setTimeout(() => {
+                    endGameGif.style.backgroundImage = "url('luigiwins.gif')";
+                    endGameGif.style.display = "block";
+                }, 2000);
             }
             answerInput.style.display = "none";
         }
     </script>
-</body>
-</html>
