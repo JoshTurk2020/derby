@@ -370,49 +370,42 @@
 
     
     function moveHorse(horse) {
-        const playerDistance = 200; // Increase the distance for players
-        const zombieDistance = 420; // Increase the distance for the zombie
-        if (horse === 1) {
-            player1Horse.style.left = `${player1Horse.offsetLeft + playerDistance}px`;
-        } else if (horse === 2) {
-            player2Horse.style.left = `${player2Horse.offsetLeft + playerDistance}px`;
-        } else if (horse === "zombie") {
-            zombieHorse.style.left = `${zombieHorse.offsetLeft + zombieDistance}px`;
-            if (incorrectAnswers === 4) {
-                zombieHorse.style.left = `${window.innerWidth - zombieHorse.offsetWidth - 280}px`;
-            }
-        }
-        if (zombieHorse.offsetLeft >= window.innerWidth - zombieHorse.offsetWidth - 280) {
-            endGame("zombie");
+    const playerDistance = 200; // Increase the distance for players
+    const zombieDistance = 320; // Increase the distance for the zombie
+    if (horse === 1) {
+        player1Horse.style.left = `${player1Horse.offsetLeft + playerDistance}px`;
+    } else if (horse === 2) {
+        player2Horse.style.left = `${player2Horse.offsetLeft + playerDistance}px`;
+    } else if (horse === "zombie") {
+        zombieHorse.style.left = `${zombieHorse.offsetLeft + zombieDistance}px`;
+        if (incorrectAnswers === 4) {
+            zombieHorse.style.left = `${window.innerWidth - zombieHorse.offsetWidth - 280}px`;
         }
     }
+    if (zombieHorse.offsetLeft >= window.innerWidth - zombieHorse.offsetWidth - 280) {
+        endGame("zombie");
+    }
+}
 
     function endGame(winner) {
-    if (winner === "player1") {
-        captureMessage.textContent = `${player1NameDisplay.textContent} rescued Princess Toadstool! ${player2NameDisplay.textContent} and Bowser were defeated!`;
-        endGameGif.style.backgroundImage = "url('mariowins.gif')";
-    } else if (winner === "player2") {
-        captureMessage.textContent = `${player2NameDisplay.textContent} rescued Princess Toadstool! ${player1NameDisplay.textContent} and Bowser were defeated!`;
-        endGameGif.style.backgroundImage = "url('luigiwins.gif')";
-    } else if (winner === "zombie") {
-        captureMessage.textContent = "Bowser captured Princess Toadstool! Race Over!";
-        endGameGif.style.backgroundImage = "url('bowserwins.gif')";
+        if (winner === "player1") {
+            captureMessage.textContent = `${player1NameDisplay.textContent} rescued Princess Toadstool! ${player2NameDisplay.textContent} and Bowser were defeated!`;
+            endGameGif.style.backgroundImage = "url('mariowins.gif')";
+        } else if (winner === "player2") {
+            captureMessage.textContent = `${player2NameDisplay.textContent} rescued Princess Toadstool! ${player1NameDisplay.textContent} and Bowser were defeated!`;
+            endGameGif.style.backgroundImage = "url('luigiwins.gif')";
+        } else if (winner === "zombie") {
+            captureMessage.textContent = "Bowser captured Princess Toadstool! Race Over!";
+            endGameGif.style.backgroundImage = "url('bowserwins.gif')";
+        }
+        endGameGif.style.display = "block";
+        playOminousMusic();
     }
-    endGameGif.style.display = "block";
-    playOminousMusic();
 
-    // Display the "Play again?" prompt
-    const playAgainButton = document.createElement("button");
-    playAgainButton.textContent = "Play Again?";
-    playAgainButton.onclick = function() {
-        location.reload(); // Reload the page to start a new game
-    };
-    captureMessage.appendChild(playAgainButton);
-}
     function shuffleQuestions() {
         for (let i = questions.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [questions[i], questions[j]] = [questions[j], questions[i]];
         }
     }
-</script>
+</script> 
