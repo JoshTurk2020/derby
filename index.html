@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conditional Horse Race</title>
+    <title>Save Princess Toadstool!</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
         body {
-            background-image: url('bowserhell.jpg');
+            background-image: url('derbytrack.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             font-family: 'Bangers', cursive;
@@ -50,7 +50,7 @@
             transform: translateY(-50%);
             width: 200px;
             height: 200px;
-            background-image: url('princess_toadstool.gif');
+            background-image: url('toadstool.gif');
             background-size: cover;
             background-repeat: no-repeat;
         }
@@ -114,6 +114,10 @@
         .player-info span {
             font-weight: bold;
         }
+        .score {
+            font-size: 24px;
+            margin-top: 10px;
+        }
         #captureMessage {
             text-align: center;
             font-size: 40px;
@@ -131,11 +135,16 @@
             background-repeat: no-repeat;
             display: none;
         }
+        #rulesMessage {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <div id="nameInput">
-        <h1>Zero and First Conditional Derby</h1>
+        <h1>Save Princess Toadstool!</h1>
         <label for="player1Name">Player 1 Name:</label>
         <input type="text" id="player1Name" placeholder="Enter Player 1 Name">
         <br>
@@ -146,7 +155,7 @@
     </div>
 
     <div id="gameContainer" style="display: none;">
-        <h1>Zero and First Conditional Derby</h1>
+        <h1>Save Princess Toadstool!</h1>
         <div class="racetrack">
             <div class="horse player1" id="player1Horse"></div>
         </div>
@@ -162,11 +171,21 @@
         <button onclick="checkAnswer()">Submit</button>
         <p id="result"></p>
         <div class="player-info">
-            <span class="player1-name"></span>
-            <span class="player2-name"></span>
-            <span class="zombie-name">Bowser</span>
+            <div>
+                <span class="player1-name"></span>
+                <div class="score" id="player1Score">Score: 0</div>
+            </div>
+            <div>
+                <span class="player2-name"></span>
+                <div class="score" id="player2Score">Score: 0</div>
+            </div>
+            <div>
+                <span class="zombie-name">Bowser</span>
+                <div class="score" id="zombieScore">Score: 0</div>
+            </div>
         </div>
         <p id="captureMessage"></p>
+        <p id="rulesMessage"></p>
     </div>
     <div id="endGameGif"></div>
 
@@ -179,6 +198,10 @@
         const resultElement = document.getElementById('result');
         const captureMessage = document.getElementById('captureMessage');
         const endGameGif = document.getElementById('endGameGif');
+        const player1ScoreElement = document.getElementById('player1Score');
+        const player2ScoreElement = document.getElementById('player2Score');
+        const zombieScoreElement = document.getElementById('zombieScore');
+        const rulesMessage = document.getElementById('rulesMessage');
 
         let currentPlayer = 1;
         let player1CorrectAnswers = 0;
@@ -235,7 +258,12 @@
                 shuffleQuestions();
                 playBackgroundMusic();
                 displayQuestion();
+                displayRulesMessage();
             }
+        }
+
+        function displayRulesMessage() {
+            rulesMessage.textContent = "Rules: Players alternate turns, with the first getting 10 correct answers to win the game by rescuing the Princess. Incorrect answers by either player advances Bowser. If both players combine for 5 incorrect answers, then Bowser advances to the Princess and wins.";
         }
 
         function playBackgroundMusic() {
@@ -250,7 +278,7 @@
         }
 
         function playMarioSound() {
-            const sound = new Audio('mario_sound.mp3');
+            const sound = new Audio('mariosound.mp3');
             sound.play();
         }
 
@@ -273,13 +301,13 @@
 
         function displayQuestion() {
             if (questions.length === 0) {
-                questionElement.textContent = "No more questions. Race Over!";
+                questionElement.textContent = "All out of questions! Start over!";
                 answerInput.style.display = "none";
                 return;
             }
             const randomIndex = Math.floor(Math.random() * questions.length);
             const question = questions[randomIndex];
-            questionElement.textContent = question.question;
+            questionElement.textContent = question;
             answerInput.value = "";
             resultElement.textContent = "";
             
@@ -290,16 +318,18 @@
 
         function checkAnswer() {
             const userAnswer = answerInput.value.trim().toLowerCase();
-            const currentQuestion = questions.find(q => q.question === questionElement.textContent);
+            const currentQuestion = questionElement.textContent;
 
             if (userAnswer === currentQuestion.answer) {
                 moveHorse(currentPlayer);
                 resultElement.textContent = "Correct!";
                 if (currentPlayer === 1) {
                     player1CorrectAnswers++;
+                    player1ScoreElement.textContent = `Score: ${player1CorrectAnswers}`;
                     playMarioSound();
                 } else if (currentPlayer === 2) {
                     player2CorrectAnswers++;
+                    player2ScoreElement.textContent = `Score: ${player2CorrectAnswers}`;
                     playSonicSound();
                 }
 
@@ -313,20 +343,20 @@
             } else {
                 moveHorse("zombie");
                 resultElement.textContent = "Incorrect! Bowser moves forward.";
+                zombieScoreElement.textContent = `Score: ${++incorrectAnswers}`;
                 playBowserLaugh();
-                incorrectAnswers++;
 
                 if (incorrectAnswers === 5) {
                     endGame("zombie");
                     return;
                 }
             }
-
+            
             questions = questions.filter(q => q !== currentQuestion);
             currentPlayer = currentPlayer === 1 ? 2 : 1;
             setTimeout(displayQuestion, 1000);
         }
-
+        
         function moveHorse(horse) {
             const playerDistance = 2;
             const zombieDistance = 4;
@@ -345,35 +375,27 @@
             }
         }
 
+        function endGame(winner) {
+            if (winner === "player1") {
+                captureMessage.textContent = `${player1NameDisplay.textContent} rescued Princess Toadstool! ${player2NameDisplay.textContent} and Bowser were defeated!`;
+                endGameGif.style.backgroundImage = "url('mariowins.gif')";
+            } else if (winner === "player2") {
+                captureMessage.textContent = `${player2NameDisplay.textContent} rescued Princess Toadstool! ${player1NameDisplay.textContent} and Bowser were defeated!`;
+                endGameGif.style.backgroundImage = "url('luigiwins.gif')";
+            } else if (winner === "zombie") {
+                captureMessage.textContent = "Bowser captured Princess Toadstool! Race Over!";
+                endGameGif.style.backgroundImage = "url('bowserwins.gif')";
+            }
+            endGameGif.style.display = "block";
+            playOminousMusic();
+        }
+
         function shuffleQuestions() {
             for (let i = questions.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [questions[i], questions[j]] = [questions[j], questions[i]];
             }
         }
-
-        function endGame(winner) {
-            if (winner === "zombie") {
-                captureMessage.textContent = "Game Over! Bowser wins!";
-                playBowserLaugh();
-                playOminousMusic();
-                setTimeout(() => {
-                    endGameGif.style.backgroundImage = "url('bowserwins.gif')";
-                    endGameGif.style.display = "block";
-                }, 2000);
-            } else if (winner === "player1") {
-                captureMessage.textContent = "Game Over! Mario wins!";
-                setTimeout(() => {
-                    endGameGif.style.backgroundImage = "url('mariowins.gif')";
-                    endGameGif.style.display = "block";
-                }, 2000);
-            } else if (winner === "player2") {
-                captureMessage.textContent = "Game Over! Luigi wins!";
-                setTimeout(() => {
-                    endGameGif.style.backgroundImage = "url('luigiwins.gif')";
-                    endGameGif.style.display = "block";
-                }, 2000);
-            }
-            answerInput.style.display = "none";
-        }
     </script>
+</body>
+</html>
