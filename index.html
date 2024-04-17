@@ -245,34 +245,6 @@
         const player1NameDisplay = document.querySelector('.player1-name');
         const player2NameDisplay = document.querySelector('.player2-name');
 
-        let backgroundMusic;
-        let isMuted = false;
-        let backgroundMusicVolume = 1; // Initial volume level
-
-        function playBackgroundMusic() {
-            backgroundMusic = new Audio('mariobros.mp3');
-            backgroundMusic.loop = false;
-            backgroundMusic.volume = backgroundMusicVolume;
-            backgroundMusic.play();
-        }
-
-        function toggleMute() {
-            if (isMuted) {
-                backgroundMusic.volume = backgroundMusicVolume;
-                isMuted = false;
-                muteButton.textContent = "Mute Music";
-            } else {
-                backgroundMusic.volume = 0;
-                isMuted = true;
-                muteButton.textContent = "Unmute Music";
-            }
-        }
-
-        function adjustMusicVolume(volume) {
-            backgroundMusicVolume = volume;
-            backgroundMusic.volume = volume;
-           }
-        }
         function startGame() {
             const player1Name = document.getElementById('player1Name').value;
             const player2Name = document.getElementById('player2Name').value;
