@@ -336,7 +336,7 @@
             player1CorrectAnswers++;
             player1ScoreElement.textContent = `Score: ${player1CorrectAnswers}`;
             playMarioSound();
-            if (player1CorrectAnswers === 2) {
+            if (player1CorrectAnswers === 10) {
                 endGame("player1");
                 playMarioVictorySound();
                 return;
@@ -345,7 +345,7 @@
             player2CorrectAnswers++;
             player2ScoreElement.textContent = `Score: ${player2CorrectAnswers}`;
             playSonicSound();
-            if (player2CorrectAnswers === 2) {
+            if (player2CorrectAnswers === 10) {
                 endGame("player2");
                 playLuigiVictorySound();
                 return;
