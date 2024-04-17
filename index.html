@@ -410,11 +410,11 @@
     endGameMessage.style.textAlign = 'center';
 
     if (winner === "player1") {
-        endGameMessage.textContent = `${player1NameDisplay.textContent} rescued Princess Toadstool! ${player2NameDisplay.textContent} and Bowser were defeated!`;
+        endGameMessage.textContent = `${player1NameDisplay.textContent} rescued Princess Toadstool! Bowser was defeated!`;
     } else if (winner === "player2") {
-        endGameMessage.textContent = `${player2NameDisplay.textContent} rescued Princess Toadstool! ${player1NameDisplay.textContent} and Bowser were defeated!`;
+        endGameMessage.textContent = `${player2NameDisplay.textContent} rescued Princess Toadstool! Bowser was defeated!`;
     } else if (winner === "zombie") {
-        endGameMessage.textContent = "Bowser captured Princess Toadstool! Race Over!";
+        endGameMessage.textContent = "Bowser captured Princess Toadstool! Game Over!";
     }
 
     document.body.appendChild(endGameMessage);
