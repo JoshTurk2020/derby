@@ -370,8 +370,8 @@
 
     
     function moveHorse(horse) {
-        const playerDistance = 2;
-        const zombieDistance = 4;
+        const playerDistance = 50; // Increase the distance for players
+        const zombieDistance = 100; // Increase the distance for the zombie
         if (horse === 1) {
             player1Horse.style.left = `${player1Horse.offsetLeft + playerDistance}px`;
         } else if (horse === 2) {
