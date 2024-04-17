@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conditional Horse Race</title>
+    <title>Save Princess Toadstool!</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
@@ -43,14 +43,14 @@
         .horse.zombie {
             background-image: url('bowser.gif');
         }
-        .carrot {
+        .princess {
             position: absolute;
             right: 80px;
             top: 50%;
             transform: translateY(-50%);
             width: 200px;
             height: 200px;
-            background-image: url('toadstool.gif');
+            background-image: url('princess.gif');
             background-size: cover;
             background-repeat: no-repeat;
         }
@@ -114,11 +114,29 @@
         .player-info span {
             font-weight: bold;
         }
+        #captureMessage {
+            text-align: center;
+            font-size: 40px;
+            margin-top: 20px;
+            display: none;
+        }
+        #captureGif {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            background-image: url('bowserwins.gif');
+            background-size: contain;
+            background-repeat: no-repeat;
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div id="nameInput">
-        <h1>Zero and First Conditional Derby</h1>
+        <h1>Save Princess Toadstool</h1>
         <label for="player1Name">Player 1 Name:</label>
         <input type="text" id="player1Name" placeholder="Enter Player 1 Name">
         <br>
@@ -129,7 +147,7 @@
     </div>
 
     <div id="gameContainer" style="display: none;">
-        <h1>Zero and First Conditional Derby</h1>
+        <h1>Save Princess Toadstool!</h1>
         <div class="racetrack">
             <div class="horse player1" id="player1Horse"></div>
         </div>
@@ -139,7 +157,7 @@
         <div class="racetrack">
             <div class="horse zombie" id="zombieHorse"></div>
         </div>
-        <div class="carrot"></div>
+        <div class="princess"></div>
         <p id="question"></p>
         <input type="text" id="answer" placeholder="Type your answer">
         <button onclick="checkAnswer()">Submit</button>
@@ -149,7 +167,9 @@
             <span class="player2-name"></span>
             <span class="zombie-name">Bowser</span>
         </div>
+        <p id="captureMessage">Bowser captured the Princess!</p>
     </div>
+    <div id="captureGif"></div>
 
     <script>
         const player1Horse = document.getElementById('player1Horse');
@@ -158,11 +178,14 @@
         const questionElement = document.getElementById('question');
         const answerInput = document.getElementById('answer');
         const resultElement = document.getElementById('result');
+        const captureMessage = document.getElementById('captureMessage');
+        const captureGif = document.getElementById('captureGif');
 
         let currentPlayer = 1;
         let player1CorrectAnswers = 0;
         let player2CorrectAnswers = 0;
         let incorrectAnswers = 0;
+        let backgroundMusic;
         let questions = [
             { question: "If it rains tomorrow, I _____ (stay) at home.", answer: "will stay" },
             { question: "If you heat water to 100°C, it _____ (boil).", answer: "boils" },
@@ -217,9 +240,9 @@
         }
 
         function playBackgroundMusic() {
-            const audio = new Audio('william_tell.mp3');
-            audio.loop = true;
-            audio.play();
+            backgroundMusic = new Audio('william_tell.mp3');
+            backgroundMusic.loop = true;
+            backgroundMusic.play();
         }
 
         function playGunshot() {
@@ -230,6 +253,18 @@
         function playHorseSound(isCorrect) {
             const sound = isCorrect ? new Audio('horse-neigh.mp3') : new Audio('horse-snort.mp3');
             sound.play();
+        }
+
+        function playBowserLaugh() {
+            const laugh = new Audio('bowserroar.mp3');
+            laugh.play();
+        }
+
+        function playOminousMusic() {
+            backgroundMusic.pause();
+            const ominousMusic = new Audio('bowsermusic.mp3');
+            ominousMusic.loop = true;
+            ominousMusic.play();
         }
 
         function displayQuestion() {
@@ -294,6 +329,12 @@
                 player2Horse.style.left = `${player2Horse.offsetLeft + playerDistance}px`;
             } else if (horse === "zombie") {
                 zombieHorse.style.left = `${zombieHorse.offsetLeft + zombieDistance}px`;
+                if (incorrectAnswers === 4) {
+                    zombieHorse.style.left = `${window.innerWidth - zombieHorse.offsetWidth - 280}px`;
+                }
+            }
+            if (zombieHorse.offsetLeft >= window.innerWidth - zombieHorse.offsetWidth - 280) {
+                endGame("zombie");
             }
         }
 
@@ -307,6 +348,12 @@
         function endGame(winner) {
             if (winner === "zombie") {
                 questionElement.textContent = "Game Over! Bowser wins!";
+                captureMessage.style.display = "block";
+                playBowserLaugh();
+                playOminousMusic();
+                setTimeout(() => {
+                    captureGif.style.display = "block";
+                }, 2000);
             } else {
                 const winnerName = player1CorrectAnswers === 10 ? player1NameDisplay.textContent : player2NameDisplay.textContent;
                 questionElement.textContent = `Game Over! ${winnerName} wins!`;
