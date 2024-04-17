@@ -14,34 +14,18 @@
             font-family: 'Bangers', cursive;
             color: #FFD700;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-            margin: 0;
-            padding: 0;
         }
-
-        /* Center content vertically and horizontally */
-        .container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            box-sizing: border-box;
-            padding: 20px;
-        }
-
         h1 {
             text-align: center;
             font-size: 40px;
             margin-top: 20px;
         }
-
         .racetrack {
             display: flex;
             justify-content: flex-start;
             margin-bottom: 20px;
         }
-
-        .horse {
+       .horse {
             width: 120px;
             height: 120px;
             background-size: contain;
@@ -49,82 +33,116 @@
             position: relative;
             transition: left 0.5s;
         }
-
         .horse.player1 {
             background-image: url('mario.gif');
         }
-
         .horse.player2 {
             background-image: url('luigi.gif');
         }
-
         .horse.zombie {
             background-image: url('bowser.gif');
         }
-
         .princess {
             position: absolute;
-            top: 10%; /* Adjusted for smaller screens */
+            top: 100px;
             right: 80px;
             transform: translateY(-50%);
-            width: 100px;
-            height: 100px;
+            width: 200px;
+            height: 200px;
             background-image: url('toadstool.gif');
             background-size: cover;
             background-repeat: no-repeat;
         }
-
-        /* Input and button styles */
-        input[type="text"],
-        button {
-            padding: 10px;
-            font-size: 18px;
-            margin: 10px 0;
-            width: 100%;
-            box-sizing: border-box;
+        #nameInput {
+            text-align: center;
+            margin-top: 50px;
         }
-
+        #nameInput label {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        #nameInput input {
+            padding: 8px;
+            font-size: 24px;
+            margin-bottom: 10px;
+            width: 200px;
+        }
+        #nameInput button {
+            padding: 10px 20px;
+            font-size: 28px;
+            background-color: #FFD700;
+            color: #8B0000;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        #question {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        #answer {
+            padding: 8px;
+            font-size: 24px;
+            width: 200px;
+            margin: 0 auto;
+            display: block;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 28px;
+            background-color: #FFD700;
+            color: #8B0000;
+            border: none;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+        }
+        #result {
+            text-align: center;
+            font-size: 32px;
+            margin-top: 20px;
+        }
         .player-info {
             display: flex;
             justify-content: space-around;
-            margin-top: 10px; /* Reduced margin */
-            font-size: 18px; /* Reduced font size */
+            margin-top: 20px;
+            font-size: 32px;
             color: white;
         }
-
-        .score {
-            font-size: 16px; /* Reduced font size */
-            margin-top: 5px; /* Reduced margin */
+        .player-info span {
+            font-weight: bold;
         }
-
-        /* Media query for smaller screens */
-        @media only screen and (max-width: 600px) {
-            .racetrack {
-                flex-direction: column;
-            }
-
-            .horse {
-                margin-bottom: 20px;
-            }
-
-            .princess {
-                top: 10%;
-            }
-
-            .player-info {
-                flex-direction: column;
-                margin-top: 10px;
-                font-size: 18px;
-            }
-
-            .score {
-                margin-top: 5px;
-            }
+        .score {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+        #captureMessage {
+            text-align: center;
+            font-size: 40px;
+            margin-top: 20px;
+            display: none;
+        }
+        #endGameGif {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            display: none;
+        }
+        #rulesMessage {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div id="nameInput">
         <h1>Save Princess Toadstool!</h1>
         <label for="player1Name">Player 1 Name:</label>
         <input type="text" id="player1Name" placeholder="Enter Player 1 Name">
@@ -133,42 +151,42 @@
         <input type="text" id="player2Name" placeholder="Enter Player 2 Name">
         <br>
         <button onclick="startGame()">Start Race</button>
-
-        <div id="gameContainer" style="display: none;">
-            <h1>Save Princess Toadstool!</h1>
-            <div class="racetrack">
-                <div class="horse player1" id="player1Horse"></div>
-            </div>
-            <div class="racetrack">
-                <div class="horse player2" id="player2Horse"></div>
-            </div>
-            <div class="racetrack">
-                <div class="horse zombie" id="zombieHorse"></div>
-            </div>
-            <div class="princess"></div>
-            <p id="question"></p>
-            <input type="text" id="answer" placeholder="Type your answer">
-            <button onclick="checkAnswer()">Submit</button>
-            <p id="result"></p>
-            <div class="player-info">
-                <div>
-                    <span class="player1-name"></span>
-                    <div class="score" id="player1Score">Score: 0</div>
-                </div>
-                <div>
-                    <span class="player2-name"></span>
-                    <div class="score" id="player2Score">Score: 0</div>
-                </div>
-                <div>
-                    <span class="zombie-name">Bowser</span>
-                    <div class="score" id="zombieScore">Score: 0</div>
-                </div>
-            </div>
-            <p id="captureMessage"></p>
-            <p id="rulesMessage"></p>
-        </div>
-        <div id="endGameGif"></div>
     </div>
+
+    <div id="gameContainer" style="display: none;">
+        <h1>Save Princess Toadstool!</h1>
+        <div class="racetrack">
+            <div class="horse player1" id="player1Horse"></div>
+        </div>
+        <div class="racetrack">
+            <div class="horse player2" id="player2Horse"></div>
+        </div>
+        <div class="racetrack">
+            <div class="horse zombie" id="zombieHorse"></div>
+        </div>
+        <div class="princess"></div>
+        <p id="question"></p>
+        <input type="text" id="answer" placeholder="Type your answer">
+        <button onclick="checkAnswer()">Submit</button>
+        <p id="result"></p>
+        <div class="player-info">
+            <div>
+                <span class="player1-name"></span>
+                <div class="score" id="player1Score">Score: 0</div>
+            </div>
+            <div>
+                <span class="player2-name"></span>
+                <div class="score" id="player2Score">Score: 0</div>
+            </div>
+            <div>
+                <span class="zombie-name">Bowser</span>
+                <div class="score" id="zombieScore">Score: 0</div>
+            </div>
+        </div>
+        <p id="captureMessage"></p>
+        <p id="rulesMessage"></p>
+    </div>
+    <div id="endGameGif"></div>
 
     <script>
         const player1Horse = document.getElementById('player1Horse');
