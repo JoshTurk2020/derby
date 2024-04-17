@@ -388,44 +388,57 @@
     }
 
     function endGame(winner) {
+    // Disable user input
+    player1Horse.style.pointerEvents = 'none';
+    player2Horse.style.pointerEvents = 'none';
+    answerInput.disabled = true;
+    
+    // Display the end game GIF and play the ominous music
     endGameGif.style.display = "block";
     playOminousMusic();
-
-    // Clear the game container
-    gameContainer.innerHTML = "";
-
-    // Create a new container for the end game message
-    const endGameContainer = document.createElement("div");
-    endGameContainer.style.textAlign = "center";
-    endGameContainer.style.marginTop = "50px";
-
-    // Display the end game message
-    const endGameMessage = document.createElement("h1");
+    
+    // Create and display the end game message
+    const endGameMessage = document.createElement('div');
+    endGameMessage.style.position = 'fixed';
+    endGameMessage.style.top = '50%';
+    endGameMessage.style.left = '50%';
+    endGameMessage.style.transform = 'translate(-50%, -50%)';
+    endGameMessage.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    endGameMessage.style.color = 'white';
+    endGameMessage.style.padding = '20px';
+    endGameMessage.style.fontSize = '32px';
+    endGameMessage.style.textAlign = 'center';
+    
     if (winner === "player1") {
         endGameMessage.textContent = `${player1NameDisplay.textContent} rescued Princess Toadstool! ${player2NameDisplay.textContent} and Bowser were defeated!`;
-        endGameGif.style.backgroundImage = "url('mariowins.gif')";
     } else if (winner === "player2") {
         endGameMessage.textContent = `${player2NameDisplay.textContent} rescued Princess Toadstool! ${player1NameDisplay.textContent} and Bowser were defeated!`;
-        endGameGif.style.backgroundImage = "url('luigiwins.gif')";
     } else if (winner === "zombie") {
         endGameMessage.textContent = "Bowser captured Princess Toadstool! Race Over!";
-        endGameGif.style.backgroundImage = "url('bowserwins.gif')";
     }
-    endGameContainer.appendChild(endGameMessage);
-
+    
+    document.body.appendChild(endGameMessage);
+    
     // Add a "Play Again?" button
     const playAgainButton = document.createElement("button");
     playAgainButton.textContent = "Play Again?";
+    playAgainButton.style.position = 'fixed';
+    playAgainButton.style.bottom = '20px';
+    playAgainButton.style.left = '50%';
+    playAgainButton.style.transform = 'translateX(-50%)';
+    playAgainButton.style.padding = '10px 20px';
+    playAgainButton.style.fontSize = '24px';
+    playAgainButton.style.backgroundColor = '#FFD700';
+    playAgainButton.style.color = '#8B0000';
+    playAgainButton.style.border = 'none';
+    playAgainButton.style.cursor = 'pointer';
+    
     playAgainButton.onclick = function() {
         location.reload(); // Reload the page to start a new game
     };
-    playAgainButton.style.marginTop = "20px";
-    endGameContainer.appendChild(playAgainButton);
-
-    // Append the end game container to the body
-    document.body.appendChild(endGameContainer);
+    
+    document.body.appendChild(playAgainButton);
 }
-
     function shuffleQuestions() {
         for (let i = questions.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
