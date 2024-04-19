@@ -208,36 +208,33 @@
         let incorrectAnswers = 0;
         let backgroundMusic;
         let questions = [
-            { question: "If it rains tomorrow, I _____ (stay) at home.", answer: "will stay" },
-            { question: "If you heat water to 100°C, it _____ (boil).", answer: "boils" },
-            { question: "If I have enough money, I _____ (buy) a new car.", answer: "will buy" },
-            { question: "If the sun shines, the flowers _____ (bloom).", answer: "will bloom" },
-            { question: "If you mix blue and yellow, you _____ (get) green.", answer: "get" },
-            { question: "If she practices every day, she _____ (improve) her skills.", answer: "will improve" },
-            { question: "If they win the match, they _____ (celebrate) tonight.", answer: "will celebrate" },
-            { question: "If you press the power button, the computer _____ (turn) on.", answer: "turns" },
-            { question: "If I see her at the party, I _____ (say) hello.", answer: "will say" },
-            { question: "If you add two and two, you _____ (get) four.", answer: "get" },
-            { question: "If he studies hard, he _____ (pass) the exam.", answer: "will pass" },
-            { question: "If you freeze water, it _____ (turn) into ice.", answer: "turns" },
-            { question: "If they arrive on time, we _____ (start) the meeting.", answer: "will start" },
-            { question: "If I find a million dollars, I _____ (donate) to charity.", answer: "will donate" },
-            { question: "If you divide 10 by 2, you _____ (get) 5.", answer: "get" },
-            { question: "If she goes to the gym regularly, she _____ (get) fit.", answer: "will get" },
-            { question: "If I find your keys, I _____ (let) you know.", answer: "will let" },
-            { question: "If you multiply 3 by 4, you _____ (get) 12.", answer: "get" },
-            { question: "If he calls me, I _____ (answer) the phone.", answer: "will answer" },
-            { question: "If you subtract 5 from 10, you _____ (get) 5.", answer: "get" },
-            { question: "If the traffic is bad, I _____ (be) late for work.", answer: "will be" },
-            { question: "If you turn off the lights, the room _____ (be) dark.", answer: "is" },
-            { question: "If I have time, I _____ (visit) my grandparents.", answer: "will visit" },
-            { question: "If you eat too much junk food, you _____ (feel) sick.", answer: "will feel" },
-            { question: "If I study computer science, I _____ (become) a programmer.", answer: "will become" },
-            { question: "If you give me a pen, I _____ (write) a letter.", answer: "will write" },
-            { question: "If it snows tomorrow, we _____ (go) skiing.", answer: "will go" },
-            { question: "When it rains, it _____ (pour).", answer: "pours" },
-            { question: "If you learn a new language, you _____ (improve) your memory.", answer: "will improve" },
-            { question: "If I have a headache, I _____ (take) an aspirin.", answer: "will take" }
+            // Zero Conditional
+            { question: "If Mario jumps, he _____ (go) higher.", answer: "goes" },
+            { question: "If Luigi collects coins, he _____ (earn) extra lives.", answer: "earns" },
+            { question: "If Princess Peach wears her crown, she _____ (look) regal.", answer: "looks" },
+            { question: "If Bowser breathes fire, he _____ (destroy) obstacles.", answer: "destroys" },
+            { question: "If Toad gives advice, Mario _____ (listen) carefully.", answer: "listens" },
+        
+            // First Conditional
+            { question: "If Mario saves Princess Peach, she _____ (bake) him a cake.", answer: "will bake" },
+            { question: "If Luigi defeats the ghost, he _____ (receive) a reward.", answer: "will receive" },
+            { question: "If Bowser kidnaps the princess, Mario _____ (rescue) her.", answer: "will rescue" },
+            { question: "If Yoshi eats a power-up, he _____ (transform) into Super Yoshi.", answer: "will transform" },
+            { question: "If Toadette finds a star, she _____ (become) invincible.", answer: "will become" },
+        
+            // Second Conditional
+            { question: "If Mario had a cape, he _____ (fly) across the kingdom.", answer: "would fly" },
+            { question: "If Luigi won the tennis tournament, he _____ (celebrate) with his friends.", answer: "would celebrate" },
+            { question: "If Princess Daisy visited the Mushroom Kingdom, she _____ (explore) the castle.", answer: "would explore" },
+            { question: "If Bowser turned good, he _____ (apologize) to everyone.", answer: "would apologize" },
+            { question: "If Donkey Kong found a huge banana hoard, he _____ (share) it with his friends.", answer: "would share" },
+        
+            // Third Conditional
+            { question: "If Mario had collected more power-ups, he _____ (defeat) Bowser easily.", answer: "would have defeated" },
+            { question: "If Luigi had been braver, he _____ (enter) the haunted mansion alone.", answer: "would have entered" },
+            { question: "If Princess Peach had learned martial arts, she _____ (defend) herself from Bowser.", answer: "would have defended" },
+            { question: "If Bowser had studied magic, he _____ (become) an even more powerful enemy.", answer: "would have become" },
+            { question: "If Wario had found the hidden treasure, he _____ (buy) a castle of his own.", answer: "would have bought" }
         ];
 
         const nameInputContainer = document.getElementById('nameInput');
